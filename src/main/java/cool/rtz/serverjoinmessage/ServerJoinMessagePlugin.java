@@ -2,35 +2,36 @@ package cool.rtz.serverjoinmessage;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.player.ServerPostConnectEvent;
+import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
-import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ProxyServer;
+import cool.rtz.serverjoinmessage.config.PluginConfig;
 import org.slf4j.Logger;
-import net.kyori.adventure.text.Component;
 
 public class ServerJoinMessagePlugin {
 
+    private final ProxyServer server;
     private final Logger logger;
 
+    private final PluginConfig config;
+
+    // ✅ @Inject goes HERE (constructor injection)
     @Inject
-    public ServerJoinMessagePlugin(Logger logger) {
+    public ServerJoinMessagePlugin(ProxyServer server, Logger logger, PluginConfig config) {
+        this.server = server;
         this.logger = logger;
+        this.config = config;
     }
 
+    // ✅ @Subscribe goes on METHODS (not class, not constructor)
     @Subscribe
-    public void onServerConnect(ServerPostConnectEvent event) {
-        Player player = event.getPlayer();
+    public void onInit(ProxyInitializeEvent event) {
+        logger.info("ServerJoinMessage starting...");
 
-        player.getCurrentServer().ifPresent(currentServer -> {
-            String serverName = currentServer
-                    .getServerInfo()
-                    .getName();
+        config.load();
 
-            player.sendMessage(Component.text(
-                    "You joined the "
-                    + serverName
-                    + " server. Type /server to choose another server."
-            ));
-        });
+        server.getEventManager().register(this, new ServerListener(server, config));
+
+        logger.info("ServerJoinMessage enabled.");
     }
 }

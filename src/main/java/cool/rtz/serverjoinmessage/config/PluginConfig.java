@@ -1,69 +1,62 @@
 package cool.rtz.serverjoinmessage.config;
 
+import com.google.inject.Inject;
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
+import org.slf4j.Logger;
 import org.spongepowered.configurate.CommentedConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
-import org.slf4j.Logger;
 
-import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.Path;
 
 public class PluginConfig {
 
     private final Logger logger;
+    private final Path dataDirectory;
 
     private String message;
-    private final Map<String, String> serverAliases = new HashMap<>();
 
-    public PluginConfig(Logger logger) {
+    @Inject
+    public PluginConfig(Logger logger, @DataDirectory Path dataDirectory) {
         this.logger = logger;
+        this.dataDirectory = dataDirectory;
     }
 
     public void load() {
         try {
-            File file = new File("plugins/serverjoinmessage/config.yml");
+            Path file = dataDirectory.resolve("config.yml");
 
-            if (!file.exists()) {
-                file.getParentFile().mkdirs();
-                Files.copy(
-                        getClass().getClassLoader().getResourceAsStream("config.yml"),
-                        file.toPath()
-                );
+            if (!Files.exists(file)) {
+                Files.createDirectories(dataDirectory);
+
+                try (InputStream in = getClass().getClassLoader().getResourceAsStream("config.yml")) {
+                    if (in == null) {
+                        throw new IllegalStateException("config.yml missing from jar resources!");
+                    }
+                    Files.copy(in, file);
+                }
             }
 
             YamlConfigurationLoader loader = YamlConfigurationLoader.builder()
-                    .path(file.toPath())
+                    .path(file)
                     .build();
 
             CommentedConfigurationNode root = loader.load();
 
-            this.message = root.node("message").getString(
+            message = root.node("message").getString(
                     "<green>You joined %server%! Type /server to switch."
             );
 
-            serverAliases.clear();
-
-            CommentedConfigurationNode aliases = root.node("server-aliases");
-
-            for (var entry : aliases.childrenMap().entrySet()) {
-                String key = entry.getKey().toString();
-                String value = entry.getValue().getString(key);
-
-                serverAliases.put(key.toLowerCase(), value);
-            }
+            logger.info("Config loaded successfully.");
 
         } catch (Exception e) {
             logger.error("Failed to load config", e);
-            this.message = "<red>Config error";
+            message = "<red>Config error";
         }
     }
 
     public String getMessage() {
         return message;
-    }
-
-    public String getServerDisplay(String serverName) {
-        return serverAliases.getOrDefault(serverName.toLowerCase(), serverName);
     }
 }
