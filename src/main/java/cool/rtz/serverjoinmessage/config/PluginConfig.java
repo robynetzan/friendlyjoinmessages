@@ -16,6 +16,7 @@ public class PluginConfig {
     private final Path dataDirectory;
 
     private String message;
+    private CommentedConfigurationNode root;
 
     @Inject
     public PluginConfig(Logger logger, @DataDirectory Path dataDirectory) {
@@ -42,7 +43,7 @@ public class PluginConfig {
                     .path(file)
                     .build();
 
-            CommentedConfigurationNode root = loader.load();
+            root = loader.load();
 
             message = root.node("message").getString(
                     "<green>You joined %server%! Type /server to switch."
@@ -54,6 +55,11 @@ public class PluginConfig {
             logger.error("Failed to load config", e);
             message = "<red>Config error";
         }
+    }
+
+    public String getServerDisplay(String rawServer) {
+        String path = "server-aliases." + rawServer;
+        return root.node(path).getString(rawServer);
     }
 
     public String getMessage() {

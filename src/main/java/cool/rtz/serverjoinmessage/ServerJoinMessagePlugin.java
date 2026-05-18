@@ -6,6 +6,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.proxy.ProxyServer;
 import cool.rtz.serverjoinmessage.config.PluginConfig;
+import cool.rtz.serverjoinmessage.listener.ServerListener;
 import org.slf4j.Logger;
 
 public class ServerJoinMessagePlugin {
