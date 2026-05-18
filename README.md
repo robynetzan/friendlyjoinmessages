@@ -10,3 +10,11 @@ server-aliases:
 ```
 
 The `message` field represents the base message, and you can use `%server%` as a placeholder to display the server the player has joined. In `server-aliases`, you can create replacement text for the server using the server name specified in your Velocity config.
+
+You can reload the config by typing `/sjm` in the Velocity console.
+
+**Coming soon**
+
+# More placeholders
+# Specific messages for each server
+# Rename command to /fjm (it was a typo smh)
