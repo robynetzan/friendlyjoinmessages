@@ -1,0 +1,14 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Windows
+Thumbs.db
+
+# Logs
+*.log

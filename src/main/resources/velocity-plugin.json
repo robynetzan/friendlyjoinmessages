@@ -1,0 +1,6 @@
+{
+  "id": "serverjoinmessage",
+  "name": "ServerJoinMessage",
+  "version": "1.0.0",
+  "main": "cool.rtz.serverjoinmessage.ServerJoinMessagePlugin"
+}

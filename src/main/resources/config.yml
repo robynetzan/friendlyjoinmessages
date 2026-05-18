@@ -1,0 +1,4 @@
+message: "<green>You joined %server%! Type /server to switch."
+server-aliases:
+  survival: "<cyan>Survival</cyan>"
+  creative: "<red>Creative</red>"
