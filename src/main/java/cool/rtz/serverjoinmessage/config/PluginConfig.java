@@ -58,8 +58,7 @@ public class PluginConfig {
     }
 
     public String getServerDisplay(String rawServer) {
-        String path = "server-aliases." + rawServer;
-        return root.node(path).getString(rawServer);
+        return root.node("server-aliases",rawServer).getString(rawServer);
     }
 
     public String getMessage() {
