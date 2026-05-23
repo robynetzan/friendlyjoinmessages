@@ -19,7 +19,6 @@ public class ServerJoinMessagePlugin {
 
     private final PluginConfig config;
 
-    // ✅ @Inject goes HERE (constructor injection)
     @Inject
     public ServerJoinMessagePlugin(ProxyServer server, Logger logger, PluginConfig config) {
         this.server = server;
@@ -27,7 +26,6 @@ public class ServerJoinMessagePlugin {
         this.config = config;
     }
 
-    // ✅ @Subscribe goes on METHODS (not class, not constructor)
     @Subscribe
     public void onInit(ProxyInitializeEvent event) {
         logger.info("Friendly Join Messages starting...");

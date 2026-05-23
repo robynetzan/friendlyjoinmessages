@@ -23,6 +23,10 @@ You can reload the config by typing `/sjm` in the Velocity console.
 **Coming soon**
 
 - More placeholders
+  - `%players_online%` - number of players online
+  - `%luckperms_prefix%`
+  - `%luckperms_suffix%`
+  - `%luckperms_group%`
 - Specific messages for each server
 - Rename command to /fjm (it was a typo smh)
 - Permissions
