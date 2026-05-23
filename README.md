@@ -9,7 +9,14 @@ server-aliases:
   lobby: "<light_purple>Lobby</light_purple>"
 ```
 
-The `message` field represents the base message, and you can use `%server%` as a placeholder to display the server the player has joined. In `server-aliases`, you can create replacement text for the server using the server name specified in your Velocity config.
+The `message` field represents the base message template. In `server-aliases`, you can create replacement text for the server using the server name specified in your Velocity config.
+
+**Placeholders**
+
+- `%server%` - The name of the server the player has joined
+- `%player%` - The username of the player
+
+**Commands**
 
 You can reload the config by typing `/sjm` in the Velocity console.
 
@@ -18,3 +25,5 @@ You can reload the config by typing `/sjm` in the Velocity console.
 - More placeholders
 - Specific messages for each server
 - Rename command to /fjm (it was a typo smh)
+- Permissions
+- Reload config from backend server
