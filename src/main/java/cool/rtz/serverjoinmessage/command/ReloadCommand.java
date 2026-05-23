@@ -22,7 +22,7 @@ public class ReloadCommand implements SimpleCommand {
             config.load();
 
             invocation.source().sendMessage(
-                    Component.text("ServerJoinMessage config reloaded.")
+                    Component.text("Friendly Join Messages config reloaded.")
             );
 
             logger.info("Config reloaded via command.");
@@ -40,6 +40,6 @@ public class ReloadCommand implements SimpleCommand {
     @Override
     public boolean hasPermission(Invocation invocation) {
         return invocation.source()
-                .hasPermission("serverjoinmessage.reload");
+                .hasPermission("friendlyjoinmessages.reload");
     }
 }

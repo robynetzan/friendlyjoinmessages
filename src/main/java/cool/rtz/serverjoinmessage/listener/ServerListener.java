@@ -26,10 +26,13 @@ public class ServerListener {
                 .map(s -> s.getServerInfo().getName())
                 .orElse("unknown");
 
-        String display = config.getServerDisplay(rawServer);
+        String serverPlaceholderDisplay = config.getServerDisplay(rawServer);
+
+        String playerName = player.getUsername();
 
         String message = config.getMessage()
-                .replace("%server%", display);
+                .replace("%server%", serverPlaceholderDisplay)
+                .replace("%player%", playerName);
 
         player.sendMessage(miniMessage.deserialize(message));
     }

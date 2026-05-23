@@ -30,7 +30,7 @@ public class ServerJoinMessagePlugin {
     // ✅ @Subscribe goes on METHODS (not class, not constructor)
     @Subscribe
     public void onInit(ProxyInitializeEvent event) {
-        logger.info("ServerJoinMessage starting...");
+        logger.info("Friendly Join Messages starting...");
 
         config.load();
 
@@ -38,8 +38,8 @@ public class ServerJoinMessagePlugin {
 
         CommandManager manager = server.getCommandManager();
 
-        CommandMeta meta = manager.metaBuilder("sjm")
-                .aliases("serverjoinmessage")
+        CommandMeta meta = manager.metaBuilder("fjm")
+                .aliases("friendlyjoinmessage")
                 .build();
 
         manager.register(
@@ -47,7 +47,7 @@ public class ServerJoinMessagePlugin {
                 new ReloadCommand(config, logger)
         );
 
-        logger.info("ServerJoinMessage enabled.");
+        logger.info("Friendly Join Messages enabled.");
     }
 
 
